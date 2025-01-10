@@ -1,5 +1,5 @@
 ﻿using AppWebGenesisFE.Models.Entities.Customer;
-using AppWebGenesisFE.Models.Models;
+using AppWebGenesisFE.Models.Models.Customer;
 using AutoMapper;
 
 namespace AppWebGenesisFE.ApiService.Mapper

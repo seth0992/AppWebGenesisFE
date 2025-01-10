@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AppWebGenesisFE.Models\AppWebGenesisFE.Models.csproj" />
+    <ProjectReference Include="..\AppWebGenesisFE.ServiceDefaults\AppWebGenesisFE.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

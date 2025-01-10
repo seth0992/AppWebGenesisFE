@@ -1,4 +1,5 @@
 ﻿using AppWebGenesisFE.Models.Entities.Catalog;
+using AppWebGenesisFE.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AppWebGenesisFE.Models.Entities.Customer
 {
-    public class CustomerModel
+    public class CustomerModel : IHasTenant
     {
         public long ID { get; set; }
         public string CustomerName { get; set; } = string.Empty;
@@ -22,7 +23,7 @@ namespace AppWebGenesisFE.Models.Entities.Customer
         public string Phone { get; set; } = string.Empty;
         public string? Neighborhood { get; set; } = string.Empty;
         public int DistrictID { get; set; }
-        public long TenantId { get; set; }
+       // public long TenantId { get; set; }
 
 
 
@@ -32,6 +33,6 @@ namespace AppWebGenesisFE.Models.Entities.Customer
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public DistrictModel? District { get; set; }
-
+        public long TenantId { get; set; }
     }
 }

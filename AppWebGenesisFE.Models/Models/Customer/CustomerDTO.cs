@@ -1,4 +1,4 @@
-﻿namespace AppWebGenesisFE.Models.Models
+﻿namespace AppWebGenesisFE.Models.Models.Customer
 {
     public class CustomerDTO
     {
@@ -17,5 +17,5 @@
         public long TenantId { get; set; }
 
     }
-    
+
 }

@@ -1,13 +1,16 @@
 ﻿using AppWebGenesisFE.BL.Services;
 using AppWebGenesisFE.Models.Entities.Customer;
 using AppWebGenesisFE.Models.Models;
+using AppWebGenesisFE.Models.Models.Customer;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Numerics;
 
 namespace AppWebGenesisFE.ApiService.Controllers
 {
+    [Authorize] // Requiere autenticación
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerController(ICustomerService customerService, IMapper mapper) : ControllerBase
