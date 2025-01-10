@@ -7,11 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AppWebGenesisFE.BL\AppWebGenesisFE.BL.csproj" />
+    <ProjectReference Include="..\AppWebGenesisFE.Models\AppWebGenesisFE.Models.csproj" />
     <ProjectReference Include="..\AppWebGenesisFE.ServiceDefaults\AppWebGenesisFE.ServiceDefaults.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />
   </ItemGroup>
 
 </Project>

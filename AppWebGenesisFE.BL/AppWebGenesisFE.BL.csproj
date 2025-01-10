@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppWebGenesisFE.Database\AppWebGenesisFE.Database.csproj" />
+    <ProjectReference Include="..\AppWebGenesisFE.Models\AppWebGenesisFE.Models.csproj" />
+  </ItemGroup>
+
+</Project>
