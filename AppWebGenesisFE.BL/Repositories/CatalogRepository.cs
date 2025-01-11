@@ -18,6 +18,11 @@ namespace AppWebGenesisFE.BL.Repositories
 
         Task<List<CantonModel>> GetCantonsOfProvinces(int idProvince);
         Task<List<DistrictModel>> GetCantonsOfDistricts(int idCanton);
+
+        Task UpdateIdentificationType(IdentificationTypeModel model);
+        Task UpdateProvince(ProvinceModel model);
+        Task UpdateCanton(CantonModel model);
+        Task UpdateDistrict(DistrictModel model);
     }
     public class CatalogRepository(AppDbContext AppDbContext) : ICatalogRepository
     {
@@ -49,6 +54,30 @@ namespace AppWebGenesisFE.BL.Repositories
         public Task<List<DistrictModel>> GetCantonsOfDistricts(int idCanton)
         {
             return AppDbContext.Districts.Where(x => x.CantonId == idCanton).ToListAsync();
+        }
+
+        public async Task UpdateIdentificationType(IdentificationTypeModel model)
+        {
+            AppDbContext.IdentificationTypes.Update(model);
+            await AppDbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateProvince(ProvinceModel model)
+        {
+            AppDbContext.Provinces.Update(model);
+            await AppDbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateCanton(CantonModel model)
+        {
+            AppDbContext.Cantons.Update(model);
+            await AppDbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateDistrict(DistrictModel model)
+        {
+            AppDbContext.Districts.Update(model);
+            await AppDbContext.SaveChangesAsync();
         }
     }
 }

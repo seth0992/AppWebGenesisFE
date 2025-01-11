@@ -1,5 +1,6 @@
 ﻿using AppWebGenesisFE.BL.Services;
 using AppWebGenesisFE.Models.Entities.Customer;
+using AppWebGenesisFE.Models.Exceptions;
 using AppWebGenesisFE.Models.Models;
 using AppWebGenesisFE.Models.Models.Customer;
 using AutoMapper;
@@ -13,58 +14,68 @@ namespace AppWebGenesisFE.ApiService.Controllers
     [Authorize] // Requiere autenticación
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController(ICustomerService customerService, IMapper mapper) : ControllerBase
+    public class CustomerController : ControllerBase
     {
 
-  
-        [HttpGet]
-        public async Task<ActionResult<BaseResponseModel>> GetCustomers()
+        private readonly ICustomerService _customerService;
+        private readonly IMapper _mapper;
+
+        public CustomerController(ICustomerService customerService, IMapper mapper)
         {
-
-            try
-            {
-                var customers = await customerService.GetCustomers();
-                return Ok(new BaseResponseModel { Success = true, Data = customers });
-            }
-            catch (Exception ex)
-            {
-                return Ok(new BaseResponseModel { Success = false, ErrorMessage = ex.Message });
-            }
-
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<BaseResponseModel>> CreateCustomer(CustomerDTO modeldDTO)
-        {
-            var model = mapper.Map<CustomerModel>(modeldDTO);
-
-            // Create product
-            await customerService.CreateCustomer(model);
-            return Ok(new BaseResponseModel { Success = true });
+            _customerService = customerService;
+            _mapper = mapper;
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<BaseResponseModel>> GetCustomer(long id)
         {
-            var product = await customerService.GetCustomer(id);
-            if (product == null)
+            var customer = await _customerService.GetCustomer(id);
+            if (customer == null)
             {
-                return Ok(new BaseResponseModel { Success = false, ErrorMessage = "Customer not found" });
+                throw new NotFoundException("Cliente", id);
             }
-            return Ok(new BaseResponseModel { Success = true, Data = product });
+            return Ok(new BaseResponseModel { Success = true, Data = customer });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<BaseResponseModel>> CreateCustomer(CustomerDTO modelDTO)
+        {
+            try
+            {
+                // Validación de modelo
+                if (string.IsNullOrWhiteSpace(modelDTO.CustomerName))
+                {
+                    var errors = new Dictionary<string, string[]>
+                {
+                    { "CustomerName", new[] { "El nombre del cliente es requerido" } }
+                };
+                    throw new ValidationException(errors);
+                }
+
+                var model = _mapper.Map<CustomerModel>(modelDTO);
+                await _customerService.CreateCustomer(model);
+                return Ok(new BaseResponseModel { Success = true });
+            }
+            catch (Exception ex) when (ex is not ValidationException && ex is not NotFoundException)
+            {
+                throw new ApiException("Error al crear el cliente", ex);
+            }
         }
 
         [HttpPut("{idCustomer}")]
-        public async Task<ActionResult<BaseResponseModel>> UpdateCustomer(long idCustomer, CustomerModel modeldDTO)
+        public async Task<ActionResult<BaseResponseModel>> UpdateCustomer(long idCustomer, CustomerModel model)
         {
-            var model = mapper.Map<CustomerModel>(modeldDTO);
-
-            if (idCustomer != model.ID || !await customerService.CustomerModelExist(idCustomer))
+            if (idCustomer != model.ID)
             {
-                return Ok(new BaseResponseModel { Success = false, ErrorMessage = "Customer not found" });
+                throw new ValidationException("El ID del cliente no coincide con el ID de la ruta");
             }
-            // Update custoemr
-            await customerService.UpdateCustomer(model);
+
+            if (!await _customerService.CustomerModelExist(idCustomer))
+            {
+                throw new NotFoundException("Cliente", idCustomer);
+            }
+
+            await _customerService.UpdateCustomer(model);
             return Ok(new BaseResponseModel { Success = true });
         }
     }

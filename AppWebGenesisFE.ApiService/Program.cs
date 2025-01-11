@@ -1,4 +1,8 @@
 using AppWebGenesisFE.ApiService.Mapper;
+using AppWebGenesisFE.ApiService.Middleware;
+using AppWebGenesisFE.BL.Cache;
+using AppWebGenesisFE.BL.Cache.Configuration;
+using AppWebGenesisFE.BL.Cache.Monitors;
 using AppWebGenesisFE.BL.Repositories;
 using AppWebGenesisFE.BL.Services;
 using AppWebGenesisFE.Database.Data;
@@ -80,6 +84,24 @@ builder.Services.AddScoped<ICatalogService, CatalogService>();
 
 builder.Services.AddScoped<ITenantService, TenantService>();
 
+// Agregar estas líneas después de builder.Services.AddControllers
+
+// Configuración del caché
+builder.Services.Configure<CacheOptions>(
+    builder.Configuration.GetSection(CacheOptions.ConfigurationSection));
+
+// Servicios de caché
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped<ICacheService, MemoryCacheService>();
+builder.Services.AddScoped<CatalogChangeMonitor>();
+
+builder.Services.AddLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+    logging.AddDebug();
+});
+
 // Configurar autenticación JWT
 builder.Services.AddAuthentication(options =>
 {
@@ -96,7 +118,7 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
         ValidAudience = builder.Configuration["JWT:ValidAudience"],
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+            Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!))
     };
 });
 
@@ -118,6 +140,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Añadir después de los otros servicios
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
