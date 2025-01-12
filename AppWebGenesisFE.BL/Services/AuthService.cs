@@ -1,8 +1,10 @@
 ﻿using AppWebGenesisFE.BL.Repositories;
 using AppWebGenesisFE.Database.Data;
+using AppWebGenesisFE.Models.Entities;
 using AppWebGenesisFE.Models.Entities.Tenant;
 using AppWebGenesisFE.Models.Models.Auth;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -20,7 +22,9 @@ namespace AppWebGenesisFE.BL.Services
     {
         Task<AuthResponse> LoginAsync(LoginModel model);
         Task<AuthResponse> RegisterTenantAsync(RegisterTenantModel model);
-        Task<AuthResponse> RefreshTokenAsync(string refreshToken);
+        Task AddRefreshTokenModel(RefreshTokenModel refreshTokenModel);
+        Task<RefreshTokenModel> GetRefreshTokenModel(string refreshToken);
+
         Task RevokeTokenAsync(string token);
     }
 
@@ -39,25 +43,44 @@ namespace AppWebGenesisFE.BL.Services
             if (result == PasswordVerificationResult.Failed)
                 throw new UnauthorizedAccessException("Credenciales inválidas");
 
+            var token = GenerateJwtToken(user, isRefreshToken: false);
+            var refreshToken = GenerateJwtToken(user, isRefreshToken: true);
+
+            await AddRefreshTokenModel(new RefreshTokenModel
+            {
+                RefreshToken = refreshToken,
+                UserID = user.ID
+            });
+
+
             return await GenerateAuthResponseAsync(user);
         }
 
-        public Task<AuthResponse> RefreshTokenAsync(string refreshToken)
+  
+
+        public async Task AddRefreshTokenModel(RefreshTokenModel refreshTokenModel)
         {
-            throw new NotImplementedException();
+            await authRepository.RemoveRefreshTokenByUserID(refreshTokenModel.UserID);
+            await authRepository.AddRefreshTokenModel(refreshTokenModel);
         }
+
+        public Task<RefreshTokenModel> GetRefreshTokenModel(string refreshToken)
+        {
+            return authRepository.GetRefreshTokenModel(refreshToken);
+        }
+          
 
         public async Task<AuthResponse> RegisterTenantAsync(RegisterTenantModel model)
         {
-           
+
             try
             {
                 var user = await authRepository.RegisterTenantAsync(model);
-             
+
                 return await GenerateAuthResponseAsync(user);
             }
             catch
-            {               
+            {
                 throw;
             }
         }
@@ -67,7 +90,7 @@ namespace AppWebGenesisFE.BL.Services
             throw new NotImplementedException();
         }
 
-        private async Task<AuthResponse> GenerateAuthResponseAsync(UserModel user)
+        private string GenerateJwtToken(UserModel user, bool isRefreshToken)
         {
             var claims = new List<Claim>
         {
@@ -80,22 +103,21 @@ namespace AppWebGenesisFE.BL.Services
                 configuration["JWT:Secret"]!)!);
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expiration = DateTime.UtcNow.AddHours(1);
+            //var expiration = DateTime.UtcNow.AddHours(1);
 
             var token = new JwtSecurityToken(
                 issuer: configuration["JWT:ValidIssuer"],
                 audience: configuration["JWT:ValidAudience"],
                 claims: claims,
-                expires: expiration,
+                expires: DateTime.UtcNow.AddMinutes(isRefreshToken ? 24 * 60 : 30),
                 signingCredentials: creds);
 
-            return new AuthResponse
-            {
-                Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiration = expiration,
-                User = user,
-                Tenant = user.Tenant
-            };
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        Task<AuthResponse> IAuthService.LoginAsync(LoginModel model)
+        {
+            throw new NotImplementedException();
         }
     }
 }

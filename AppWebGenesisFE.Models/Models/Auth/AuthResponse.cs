@@ -11,8 +11,9 @@ namespace AppWebGenesisFE.Models.Models.Auth
     {
         public string Token { get; set; } = string.Empty;
         public string RefreshToken { get; set; } = string.Empty;
-        public DateTime Expiration { get; set; }
-        public UserModel? User { get; set; }
-        public TenantModel? Tenant { get; set; }
+        public long TokenExpired { get; set; }
+        //public DateTime Expiration { get; set; }
+        //public UserModel? User { get; set; }
+        //public TenantModel? Tenant { get; set; }
     }
 }

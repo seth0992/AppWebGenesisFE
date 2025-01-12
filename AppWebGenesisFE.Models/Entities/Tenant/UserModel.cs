@@ -36,6 +36,13 @@ namespace AppWebGenesisFE.Models.Entities.Tenant
         [MaxLength(100, ErrorMessage = "El apellido no puede exceder los 100 caracteres")]
         public string LastName { get; set; } = string.Empty;
 
+        public virtual ICollection<UserRoleModel> UserRoles { get; set; } = new List<UserRoleModel>();
+
+        public UserModel()
+        {
+            UserRoles = new List<UserRoleModel>();
+        }
+
         //[Column(TypeName = "datetime")]
         //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         //public DateTime CreatedAt { get; set; }

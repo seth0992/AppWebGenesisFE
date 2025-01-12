@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace AppWebGenesisFE.Web
 {
@@ -14,17 +15,19 @@ namespace AppWebGenesisFE.Web
             try
             {
                 var response = await httpClient.PostAsJsonAsync(path, postModel);
-                if (response != null && response.IsSuccessStatusCode)
+
+                if (response.IsSuccessStatusCode)
                 {
-                    return JsonConvert.DeserializeObject<T1>(await response.Content.ReadAsStringAsync())!;
+                    var content = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<T1>(content)!;
                 }
+
+                throw new HttpRequestException($"Error en la solicitud: {response.StatusCode}");
             }
             catch (Exception ex)
             {
-                // Log the error or handle it
                 throw new HttpRequestException($"Error while posting to {path}: {ex.Message}", ex);
             }
-            return default!;
         }
 
         public async Task<T1> PutAsync<T1, T2>(string path, T2 postModel)

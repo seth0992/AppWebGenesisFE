@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="@Assets["AppWebGenesisFE.Web.styles.css"]" />
     <ImportMap />
     <link rel="icon" type="image/png" href="favicon.png" />
-       <link href="_content/Blazored.Toast/Blazored.Toast.bundle.scp.css" rel="stylesheet" /> <!-- Style for toast notification -->
-    <RadzenTheme Theme="material" @rendermode="InteractiveServer" />
-    <HeadOutlet @rendermode="InteractiveServer" />
+    <link href="_content/Blazored.Toast/Blazored.Toast.bundle.scp.css" rel="stylesheet" /> <!-- Style for toast notification -->
+   @*  <RadzenTheme Theme="material" @rendermode="InteractiveServer" /> *@
+      <HeadOutlet @rendermode="new InteractiveServerRenderMode(prerender: false)" />
 </head>
 
 <body>
-    <Routes @rendermode="InteractiveServer" />
+   <Routes @rendermode="new InteractiveServerRenderMode(prerender: false)" />
     <script src="_framework/blazor.web.js"></script>
     <script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Radzen.Colors).Assembly.GetName().Version)"></script>
 </body>

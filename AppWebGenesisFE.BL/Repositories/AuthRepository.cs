@@ -1,4 +1,5 @@
 ﻿using AppWebGenesisFE.Database.Data;
+using AppWebGenesisFE.Models.Entities;
 using AppWebGenesisFE.Models.Entities.Tenant;
 using AppWebGenesisFE.Models.Models.Auth;
 using Microsoft.AspNetCore.Identity;
@@ -13,12 +14,28 @@ namespace AppWebGenesisFE.BL.Repositories
 {
     public interface IAuthRepository
     {
-        Task<UserModel> LoginAsync(LoginModel model);
         Task<UserModel> RegisterTenantAsync(RegisterTenantModel model);
- 
+        Task<UserModel> LoginAsync(LoginModel model);
+
+
+        Task RemoveRefreshTokenByUserID(long userID);
+        Task AddRefreshTokenModel(RefreshTokenModel refreshTokenModel);
+        Task<RefreshTokenModel> GetRefreshTokenModel(string refreshToken);
+
     }
     public class AuthRepository(AppDbContext AppDbContext, IPasswordHasher<UserModel> passwordHasher) : IAuthRepository
     {
+        public async Task AddRefreshTokenModel(RefreshTokenModel refreshTokenModel)
+        {
+            await AppDbContext.RefreshTokens.AddAsync(refreshTokenModel);
+            await AppDbContext.SaveChangesAsync();
+        }
+
+        public Task<RefreshTokenModel> GetRefreshTokenModel(string refreshToken)
+        {
+            return AppDbContext.RefreshTokens.Include(n => n.User).ThenInclude(n => n.UserRoles).ThenInclude(n => n.Role).FirstOrDefaultAsync(n => n.RefreshToken == refreshToken);
+        }
+
         public async Task<UserModel> LoginAsync(LoginModel model)
         {
             return (await AppDbContext.Users
@@ -68,5 +85,14 @@ namespace AppWebGenesisFE.BL.Repositories
             }
         }
 
+        public async Task RemoveRefreshTokenByUserID(long userID)
+        {
+            var refreshToken = AppDbContext.RefreshTokens.FirstOrDefault(n => n.UserID == userID);
+            if (refreshToken != null)
+            {
+                AppDbContext.RemoveRange(refreshToken);
+                await AppDbContext.SaveChangesAsync();
+            }
+        }
     }
 }

@@ -1,5 +1,9 @@
+using AppWebGenesisFE.ServiceDefaults;
 using AppWebGenesisFE.Web;
+using AppWebGenesisFE.Web.Authentication;
 using AppWebGenesisFE.Web.Components;
+using Blazored.Toast;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +15,12 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddOutputCache();
+
+builder.Services.AddAuthentication();
+builder.Services.AddCascadingAuthenticationState();
+
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+builder.Services.AddBlazoredToast();
 
 builder.Services.AddHttpClient<ApiClient>(client =>
     {
@@ -28,11 +38,16 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
 app.UseHttpsRedirection();
 
 app.UseAntiforgery();
 
 app.UseOutputCache();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapStaticAssets();
 

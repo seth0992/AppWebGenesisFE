@@ -1,4 +1,5 @@
-﻿using AppWebGenesisFE.Models.Entities.Catalog;
+﻿using AppWebGenesisFE.Models.Entities;
+using AppWebGenesisFE.Models.Entities.Catalog;
 using AppWebGenesisFE.Models.Entities.Customer;
 using AppWebGenesisFE.Models.Entities.Tenant;
 using AppWebGenesisFE.Models.Interfaces;
@@ -32,6 +33,9 @@ namespace AppWebGenesisFE.Database.Data
         public DbSet<RegionModel> Region { get; set; }
         public DbSet<UserModel> Users { get; set; }
         public DbSet<TenantModel> Tenants { get; set; }
+        public DbSet<RefreshTokenModel> RefreshTokens { get; set; }
+        public DbSet<UserRoleModel> UserRoles { get; set; }
+        public DbSet<RoleModel> Roles { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

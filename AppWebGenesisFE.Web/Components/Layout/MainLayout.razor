@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using Blazored.Toast.Configuration
+@inherits LayoutComponentBase
 
 <div class="page">
     <div class="sidebar">
@@ -7,7 +8,15 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+            <Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
+                <Authorized>
+                    <div>Hello, @context.User.Identity?.Name!</div>
+                </Authorized>
+                <NotAuthorized>
+                    <a href="login" class="ml-md-auto">No estas autorizado</a>
+                </NotAuthorized>
+            </Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
+            <a href="/logout">LogOut</a>
         </div>
 
         <article class="content px-4">
@@ -15,6 +24,13 @@
         </article>
     </main>
 </div>
+
+<BlazoredToasts Position="ToastPosition.TopRight"
+                Timeout="10"
+                IconType="IconType.FontAwesome"
+                SuccessClass="success-toast-override"
+                SuccessIcon="fa fa-thumbs-up"
+                ErrorIcon="fa fa-bug" />
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.
