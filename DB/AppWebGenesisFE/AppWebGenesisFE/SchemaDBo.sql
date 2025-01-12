@@ -37,10 +37,10 @@ CREATE TABLE [dbo].[Users] (
 
 -- Datos de prueba para Users
 INSERT INTO Users (TenantId, Email, PasswordHash, Rol, FirstName, LastName, IsActive) VALUES
-( 1, 'admin@abc.com', 'AQAAAAIAAYagAAAAELpUWqz5rzxPDhVol3C4pz4tVEI1cxrNHXcYyHxD7GIX8zfDYc48f7I9mCzH5LvS8Q==', 'Admin', 'Juan', 'Pérez', 1),
-( 1, 'user@abc.com', 'AQAAAAIAAYagAAAAELpUWqz5rzxPDhVol3C4pz4tVEI1cxrNHXcYyHxD7GIX8zfDYc48f7I9mCzH5LvS8Q==', 'User', 'María', 'López', 1),
-(2, 'admin@xyz.com', 'AQAAAAIAAYagAAAAELpUWqz5rzxPDhVol3C4pz4tVEI1cxrNHXcYyHxD7GIX8zfDYc48f7I9mCzH5LvS8Q==', 'Admin', 'Pedro', 'González', 1),
-(3, 'admin@tech.com', 'AQAAAAIAAYagAAAAELpUWqz5rzxPDhVol3C4pz4tVEI1cxrNHXcYyHxD7GIX8zfDYc48f7I9mCzH5LvS8Q==', 'Admin', 'Ana', 'Martínez', 1);
+( 1, 'admin@abc.com', 'AQAAAAIAAYagAAAAEJAYtHJ3tZPfXcLhOFTxZ0iRAKBpAxzFO7mjsNMqaolmglC7XuaRGv8/1x0uzsIuog==', 'Admin', 'Juan', 'Pérez', 1),
+( 1, 'user@abc.com', 'AQAAAAIAAYagAAAAEJAYtHJ3tZPfXcLhOFTxZ0iRAKBpAxzFO7mjsNMqaolmglC7XuaRGv8/1x0uzsIuog==', 'User', 'María', 'López', 1),
+(2, 'admin@xyz.com', 'AQAAAAIAAYagAAAAEJAYtHJ3tZPfXcLhOFTxZ0iRAKBpAxzFO7mjsNMqaolmglC7XuaRGv8/1x0uzsIuog==', 'Admin', 'Pedro', 'González', 1),
+(3, 'admin@tech.com', 'AQAAAAIAAYagAAAAEJAYtHJ3tZPfXcLhOFTxZ0iRAKBpAxzFO7mjsNMqaolmglC7XuaRGv8/1x0uzsIuog==', 'Admin', 'Ana', 'Martínez', 1);
 
 --Password123!
 select * from Users
