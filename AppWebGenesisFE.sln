@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppWebGenesisFE.AppHost", "AppWebGenesisFE.AppHost\AppWebGenesisFE.AppHost.csproj", "{96EA7F04-EDB6-43AC-BADC-4132924D11C7}"
 EndProject
@@ -9,6 +9,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppWebGenesisFE.ApiService", "AppWebGenesisFE.ApiService\AppWebGenesisFE.ApiService.csproj", "{FB96DA77-F7CB-488A-BE28-E7FAD553877A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppWebGenesisFE.Web", "AppWebGenesisFE.Web\AppWebGenesisFE.Web.csproj", "{7429B4DE-A22E-4CAD-8E4A-4A85145CFD98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppWebGenesisFE.Models", "AppWebGenesisFE.Models\AppWebGenesisFE.Models.csproj", "{98F4F45D-9FDA-45A6-A065-C5C011B26F4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppWebGenesisFE.BL", "AppWebGenesisFE.BL\AppWebGenesisFE.BL.csproj", "{A86313CC-D48A-4E9F-B2D3-2E49C0636066}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppWebGenesisFE.Database", "AppWebGenesisFE.Database\AppWebGenesisFE.Database.csproj", "{E5DD6531-E800-4D56-B237-18637FD0770F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +38,18 @@ Global
 		{7429B4DE-A22E-4CAD-8E4A-4A85145CFD98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7429B4DE-A22E-4CAD-8E4A-4A85145CFD98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7429B4DE-A22E-4CAD-8E4A-4A85145CFD98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98F4F45D-9FDA-45A6-A065-C5C011B26F4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98F4F45D-9FDA-45A6-A065-C5C011B26F4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98F4F45D-9FDA-45A6-A065-C5C011B26F4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98F4F45D-9FDA-45A6-A065-C5C011B26F4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A86313CC-D48A-4E9F-B2D3-2E49C0636066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A86313CC-D48A-4E9F-B2D3-2E49C0636066}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A86313CC-D48A-4E9F-B2D3-2E49C0636066}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A86313CC-D48A-4E9F-B2D3-2E49C0636066}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5DD6531-E800-4D56-B237-18637FD0770F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5DD6531-E800-4D56-B237-18637FD0770F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5DD6531-E800-4D56-B237-18637FD0770F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5DD6531-E800-4D56-B237-18637FD0770F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

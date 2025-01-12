@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# SQL Server Management Studio Solution File, Format Version 20.00
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "AppWebGenesisFE", "AppWebGenesisFE\AppWebGenesisFE.ssmssqlproj", "{BC2E6452-3826-4E0C-8719-1BD63CEFBC8F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Default = Default|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC2E6452-3826-4E0C-8719-1BD63CEFBC8F}.Default|Default.ActiveCfg = Default
+		{1BB5DD8F-AD9A-4085-B0A1-E4CD87CAAEB7}.Default|Default.ActiveCfg = Default
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {265AC490-3CC7-42F8-ABD8-BB7B48FB9D5E}
+	EndGlobalSection
+EndGlobal

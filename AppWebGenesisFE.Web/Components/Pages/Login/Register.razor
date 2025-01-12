@@ -1,0 +1,78 @@
+﻿@* AppWebGenesisFE.Web/Components/Pages/Auth/Register.razor *@
+@page "/register"
+@using AppWebGenesisFE.Web.Components.Layout
+@layout EmptyLayout
+@inject ILogger<Register> Logger
+@inject NavigationManager Navigation
+@inject ApiClient ApiClient
+@inject IToastService ToastService
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Registro de Empresa</h3>
+                </div>
+                <div class="card-body">
+                    <EditForm Model="@registerModel" OnValidSubmit="HandleRegister">
+                        <DataAnnotationsValidator />
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre de la Empresa</label>
+                                <InputText class="form-control" @bind-Value="registerModel.CompanyName" />
+                                <ValidationMessage For="@(() => registerModel.CompanyName)" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Identificación</label>
+                                <InputText class="form-control" @bind-Value="registerModel.Identification" />
+                                <ValidationMessage For="@(() => registerModel.Identification)" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre</label>
+                                <InputText class="form-control" @bind-Value="registerModel.FirstName" />
+                                <ValidationMessage For="@(() => registerModel.FirstName)" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Apellido</label>
+                                <InputText class="form-control" @bind-Value="registerModel.LastName" />
+                                <ValidationMessage For="@(() => registerModel.LastName)" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Correo electrónico</label>
+                            <InputText class="form-control" @bind-Value="registerModel.Email" />
+                            <ValidationMessage For="@(() => registerModel.Email)" />
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Contraseña</label>
+                                <InputText type="password" class="form-control" @bind-Value="registerModel.Password" />
+                                <ValidationMessage For="@(() => registerModel.Password)" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Confirmar Contraseña</label>
+                                <InputText type="password" class="form-control" @bind-Value="registerModel.ConfirmPassword" />
+                                <ValidationMessage For="@(() => registerModel.ConfirmPassword)" />
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Registrar</button>
+                        </div>
+                    </EditForm>
+
+                    <div class="mt-3 text-center">
+                        <a href="/login">¿Ya tienes cuenta? Inicia sesión aquí</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
